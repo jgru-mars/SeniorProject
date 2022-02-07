@@ -1,0 +1,8 @@
+Navigate to https://dev.mysql.com/downloads/windows/installer/5.7.html
+
+install the MySQL Community Downloads, first choice
+Choose Developer Default on first window
+choose only defaults
+create a MySQL Root Password, remember to save it.
+
+Open MySQL Workbench
