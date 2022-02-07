@@ -7,4 +7,5 @@ create a MySQL Root Password, remember to save it.
 
 Open MySQL Workbench
 
-"That's awesome." - John
+download mysql-connector-python and python-dotenv
+currently using the root database. create a file called .env and type MY_PASSWORD="", inserting your root password into the quotes.

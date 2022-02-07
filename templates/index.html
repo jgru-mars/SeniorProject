@@ -2,13 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Welcome</title>
+    <title>Login</title>
 </head>
 <body>
-    <form action="{{ url_for('login') }}" method="post">
-        <label>Name:</label>
-        <input type="text" name="username"/><br/><br/>
-        <input type="submit"/>
-    </form>
+<form action="{{ url_for('login') }}" method="post">
+    <label>Name:</label>
+    <input type="text" name="username"/><br/><br/>
+    <label>Password:</label>
+    <input type="password" name="password"/><br/><br/>
+    <input type="submit"/>
+    <a href="register">Don't have an account? Register.</a>
+</form>
 </body>
 </html>
