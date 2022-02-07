@@ -6,3 +6,5 @@ choose only defaults
 create a MySQL Root Password, remember to save it.
 
 Open MySQL Workbench
+
+"That's awesome." - John
