@@ -66,3 +66,5 @@ if __name__ == '__main__':
     app.secret_key = "SUPER secret"
 
     app.run(debug=True)
+
+# adding a comment to test git push
