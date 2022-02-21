@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 import uuid
+import SQLaccess
 
 allowed_users = {"nate", "ted", "upperclass"}
 # This stores the list of valid sessions to determine if a valid user is logged in
@@ -13,7 +14,7 @@ def index(request):
 
 def login(request):
     # Ensure the username was provided, otherwise redirect them back
-    username = request.POST['username']
+    option = request.POST['options']
     if not username:
         return render(request, 'index.html')
 
