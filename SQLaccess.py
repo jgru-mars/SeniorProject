@@ -21,11 +21,11 @@ def createDB():  # creates the database if it doesn't exist yet.
         try:
             cursor.execute('CREATE DATABASE seniorprojectdb;')
             cursor.execute('CREATE TABLE seniorprojectdb.floor (floorid int NOT NULL AUTO_INCREMENT, '
-                           'floorName VARCHAR(45) DEFAULT NULL, PRIMARY KEY (userid)) '
+                           'floorName VARCHAR(45) DEFAULT NULL, plan VARCHAR(50), PRIMARY KEY (userid)) '
                            )
-            cursor.execute("INSERT into floor (floorID, floorName) values (1, 'OConnel 1st')")
-            cursor.execute("INSERT into floor (floorID, floorName) values (2, 'OConnel 2nd')")
-            cursor.execute("INSERT into floor (floorID, floorName) values (3, 'Simperman 3rd')")
+            cursor.execute("INSERT into floor (floorID, floorName, plan) values (1, 'OConnel 1st','OC1.png)")
+            cursor.execute("INSERT into floor (floorID, floorName, plan) values (2, 'OConnel 2nd','CharlesS1.png')")
+            cursor.execute("INSERT into floor (floorID, floorName, plan) values (3, 'Simperman 3rd','SimpFortin1.png)")
 
         except Error as e:  # if theres an error catch it and print it
             print("ERROR: " + str(e))
