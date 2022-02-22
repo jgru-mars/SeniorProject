@@ -1,11 +1,15 @@
 # https://realpython.com/python-sql-libraries/
 import mysql.connector
 from mysql.connector import Error
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # credentials needed for the sql connection
 hostname = "localhost"
 myusername = "root"
-mypassword = "password01"  # make sure to set this to your root password
+mypassword = os.getenv('MY_PASSWORD')
 db = "seniorprojectdb"
 
 
@@ -17,17 +21,24 @@ def createDB():  # creates the database if it doesn't exist yet.
     for x in cursor:
         if str(x) == "('seniorprojectdb',)":  # if a db equals this, it exists
             dbexists = True
-    if not dbexists:  # if the database doesnt exist, create it!
+    if not dbexists:  # if the database doesn't exist, create it!
         try:
             cursor.execute('CREATE DATABASE seniorprojectdb;')
             cursor.execute('CREATE TABLE seniorprojectdb.floor (floorid int NOT NULL AUTO_INCREMENT, '
-                           'floorName VARCHAR(45) DEFAULT NULL, plan VARCHAR(50), PRIMARY KEY (userid)) '
-                           )
-            cursor.execute("INSERT into floor (floorID, floorName, plan) values (1, 'OConnel 1st','OC1.png)")
-            cursor.execute("INSERT into floor (floorID, floorName, plan) values (2, 'OConnel 2nd','CharlesS1.png')")
-            cursor.execute("INSERT into floor (floorID, floorName, plan) values (3, 'Simperman 3rd','SimpFortin1.png)")
+                           'floorName VARCHAR(45) DEFAULT NULL, plan VARCHAR(50), PRIMARY KEY (floorid)) ')
+            print('database created!')
+        except Error as e:  # if there's an error catch it and print it
+            print("ERROR: " + str(e))
 
-        except Error as e:  # if theres an error catch it and print it
+        mydb = mysql.connector.connect(host=hostname, username=myusername, password=mypassword, database = db)
+        cursor = mydb.cursor()
+        try:
+            cursor.execute("INSERT into floor (floorID, floorName, plan) values (1, 'OConnel 1st','OC1.png')")
+            cursor.execute("INSERT into floor (floorID, floorName, plan) values (2, 'OConnel 2nd','CharlesS1.png')")
+            cursor.execute("INSERT into floor (floorID, floorName, plan) values (3, 'Simperman 3rd','SimpFortin1.png')")
+            mydb.commit()
+            print('inserted values!')
+        except Error as e:  # if there's an error catch it and print it
             print("ERROR: " + str(e))
 
 
@@ -44,3 +55,7 @@ def connectToDB():  # returns a connection to the database using the credentials
     except Error as e:
         print("ERROR: " + str(e))
     return connection
+
+
+
+createDB()
