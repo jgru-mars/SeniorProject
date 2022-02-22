@@ -1,10 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-import uuid
+import mysite.SQLaccess as sqla
 
-allowed_users = {"nate", "ted", "upperclass"}
-# This stores the list of valid sessions to determine if a valid user is logged in
-active_sessions = dict()
+conn = sqla.connectToDB()
 
 
 def index(request):
@@ -12,15 +10,12 @@ def index(request):
 
 
 def login(request):
-    # Ensure the username was provided, otherwise redirect them back
     option = request.POST['options']
-    if not option:
-        return render(request, 'index.html')
 
-    # If the user is allowed, set a random session cookie if one doesn't exist
-    if option.lower() in allowed_users:
-        return HttpResponse("Login Successful")
-
+    if option:
+        filename = sqla.getFloorImg(conn, option)
+        myimagefile = open('carrollFloorPlans/' + filename, 'rb')
+        response = HttpResponse(content=myimagefile)
+        response['Content-Type'] = 'image/jpeg'
+        return response
     return HttpResponse("Permission Denied")
-
-

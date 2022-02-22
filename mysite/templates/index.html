@@ -1,4 +1,3 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,12 +8,11 @@
 <form action="login/" method="post">{% csrf_token %}
     <label>Floor Name:</label>
     <select name="options" id="options">
-        <option value="option1">Option 1</option>
-        <option value="option2">Options 2</option>
-        <option value="option3">Option 3</option>
+        <option value="OConnell 1st">OConnell 1st</option>
+        <option value="Charles 1st">Charles 1st</option>
+        <option value="Simperman 1st">Simperman 1st</option>
     </select>
     <input type="submit"/><br>
-    <img src="{% static 'CharlesS1.jpg' %}" alt="Image Display">
 </form>
 </body>
 </html>

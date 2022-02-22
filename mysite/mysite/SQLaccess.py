@@ -2,14 +2,15 @@
 import mysql.connector
 from mysql.connector import Error
 import os
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 
-load_dotenv()
+#load_dotenv()
 
 # credentials needed for the sql connection
 hostname = "localhost"
 myusername = "root"
-mypassword = os.getenv('MY_PASSWORD')
+#mypassword = os.getenv('MY_PASSWORD')
+mypassword = "password01"
 db = "seniorprojectdb"
 
 
@@ -33,9 +34,9 @@ def createDB():  # creates the database if it doesn't exist yet.
         mydb = mysql.connector.connect(host=hostname, username=myusername, password=mypassword, database = db)
         cursor = mydb.cursor()
         try:
-            cursor.execute("INSERT into floor (floorID, floorName, plan) values (1, 'OConnel 1st','OC1.png')")
-            cursor.execute("INSERT into floor (floorID, floorName, plan) values (2, 'OConnel 2nd','CharlesS1.png')")
-            cursor.execute("INSERT into floor (floorID, floorName, plan) values (3, 'Simperman 3rd','SimpFortin1.png')")
+            cursor.execute("INSERT into floor (floorID, floorName, plan) values (1, 'OConnell 1st','OC1.png')")
+            cursor.execute("INSERT into floor (floorID, floorName, plan) values (2, 'Charles 1st','CharlesS1.png')")
+            cursor.execute("INSERT into floor (floorID, floorName, plan) values (3, 'Simperman 1st','SimpFortin1.png')")
             mydb.commit()
             print('inserted values!')
         except Error as e:  # if there's an error catch it and print it
@@ -56,6 +57,18 @@ def connectToDB():  # returns a connection to the database using the credentials
         print("ERROR: " + str(e))
     return connection
 
+
+def getFloorImg(connection, value):
+    result = ""
+    cursor = connection.cursor(buffered=True)  # create a buffered cursor based off the connection
+    try:
+        cursor.execute("SELECT plan from floor where floorName = '" + value + "'")
+        connection.commit()  # confirm changes
+        result = cursor.fetchall()  # gets the result of the query
+        print("The Query was executed successfully with the result " + str(result[0][0]))
+    except Error as e:
+        print("ERROR: " + str(e))
+    return str(result[0][0])
 
 
 createDB()
