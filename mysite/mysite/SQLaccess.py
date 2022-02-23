@@ -10,7 +10,7 @@ import os
 hostname = "localhost"
 myusername = "root"
 #mypassword = os.getenv('MY_PASSWORD')
-mypassword = "password01"
+mypassword = "austinMySQL01!"
 db = "seniorprojectdb"
 
 

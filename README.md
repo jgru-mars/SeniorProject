@@ -3,6 +3,12 @@
 
 A web app that helps students figure out where they need to go on campus.
 
+###Requirements
+
+- Django
+- mysql
+- mysql-connector-python
+
 ###How to run:
 
 In your command line, navigate to the directory in which the manage.py file resides.
