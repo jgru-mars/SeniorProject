@@ -16,6 +16,7 @@ class Classes(models.Model):
 
 class ClassRoom(models.Model):
     classRoomID = models.IntegerField(max_length=100)
+    floorID = models.ForeignKey(Floor, null=True, on_delete=models.CASCADE)
     ClassRoom = models.CharField(max_length=30)
     coordinatesY = models.CharField(max_length=30)
     coordinatesX = models.CharField(max_length=30)
@@ -28,6 +29,8 @@ class Buildings(models.Model):
 
 class Schedule(models.Model):
     scheduleID = models.IntegerField(max_length=100)
+    classRoomID = models.ForeignKey(ClassRoom, null=True, on_delete=models.CASCADE)
+    classesID = models.ForeignKey(Classes, null=True, on_delete=models.CASCADE)
     section = models.CharField(max_length=30)
     startTime = models.CharField(max_length=30)
     endTime = models.CharField(max_length=30)
