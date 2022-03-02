@@ -2,15 +2,16 @@
 import mysql.connector
 from mysql.connector import Error
 import os
-#from dotenv import load_dotenv
 
-#load_dotenv()
+# from dotenv import load_dotenv
+
+# load_dotenv()
 
 # credentials needed for the sql connection
 hostname = "localhost"
 myusername = "root"
-#mypassword = os.getenv('MY_PASSWORD')
-mypassword = "!Emperor1556"
+# mypassword = os.getenv('MY_PASSWORD')
+mypassword = "password01"
 db = "seniorprojectdb"
 
 
@@ -25,18 +26,37 @@ def createDB():  # creates the database if it doesn't exist yet.
     if not dbexists:  # if the database doesn't exist, create it!
         try:
             cursor.execute('CREATE DATABASE seniorprojectdb;')
-            cursor.execute('CREATE TABLE seniorprojectdb.floor (floorid int NOT NULL AUTO_INCREMENT, '
-                           'floorName VARCHAR(45) DEFAULT NULL, plan VARCHAR(50), PRIMARY KEY (floorid)) ')
+            cursor.execute('CREATE TABLE seniorprojectdb.floor (id int NOT NULL AUTO_INCREMENT, floorName VARCHAR(45) '
+                           'DEFAULT NULL, floorImg VARCHAR(50), buildingID int, PRIMARY KEY (id)) ')
+            cursor.execute('CREATE TABLE seniorprojectdb.building (id int NOT NULL AUTO_INCREMENT, '
+                           'buildingName VARCHAR(45) DEFAULT NULL, PRIMARY KEY (id)) ')
             print('database created!')
         except Error as e:  # if there's an error catch it and print it
             print("ERROR: " + str(e))
 
-        mydb = mysql.connector.connect(host=hostname, username=myusername, password=mypassword, database = db)
+        mydb = mysql.connector.connect(host=hostname, username=myusername, password=mypassword, database=db)
         cursor = mydb.cursor()
         try:
-            cursor.execute("INSERT into floor (floorID, floorName, plan) values (1, 'OConnell 1st','OC1.png')")
-            cursor.execute("INSERT into floor (floorID, floorName, plan) values (2, 'Charles 1st','CharlesS1.png')")
-            cursor.execute("INSERT into floor (floorID, floorName, plan) values (3, 'Simperman 1st','SimpFortin1.png')")
+            cursor.execute("INSERT into floor (ID, floorName, floorImg, buildingID) values (1, 'OConnell 1st',"
+                           "'OC1.png', 1)")
+            cursor.execute("INSERT into floor (ID, floorName, floorImg, buildingID) values (2, 'Charles 1st',"
+                           "'CharlesS1.png', 2)")
+            cursor.execute("INSERT into floor (ID, floorName, floorImg, buildingID) values (3, 'Simperman 1st',"
+                           "'SimpFortin1.png', 3)")
+            cursor.execute("INSERT into floor (ID, floorName, floorImg, buildingID) values (4, 'Simperman 2nd',"
+                           "'SimpFortin2.png', 3)")
+            cursor.execute("INSERT into floor (ID, floorName, floorImg, buildingID) values (5, 'Simperman 3rd',"
+                           "'SimpFortin3.png', 3)")
+            cursor.execute("INSERT into floor (ID, floorName, floorImg, buildingID) values (6, 'Simperman 4th',"
+                           "'SimpFortin4.png', 3)")
+            cursor.execute("INSERT into floor (ID, floorName, floorImg, buildingID) values (7, 'Library 1st',"
+                           "'Library 1st floor.png', 4)")
+            cursor.execute("INSERT into floor (ID, floorName, floorImg, buildingID) values (8, 'Library 2nd',"
+                           "'Library 2nd floor.png', 4)")
+            cursor.execute("INSERT into building (ID, buildingName) values (1, 'OConnell Hall')")
+            cursor.execute("INSERT into building (ID, buildingName) values (2, 'St. Charles Hall')")
+            cursor.execute("INSERT into building (ID, buildingName) values (3, 'Simperman Hall')")
+            cursor.execute("INSERT into building (ID, buildingName) values (4, 'Library')")
             mydb.commit()
             print('inserted values!')
         except Error as e:  # if there's an error catch it and print it
@@ -62,13 +82,43 @@ def getFloorImg(connection, value):
     result = ""
     cursor = connection.cursor(buffered=True)  # create a buffered cursor based off the connection
     try:
-        cursor.execute("SELECT plan from floor where floorName = '" + value + "'")
+        cursor.execute("SELECT floorImg from floor where floorName = '" + value + "'")
         connection.commit()  # confirm changes
         result = cursor.fetchall()  # gets the result of the query
         print("The Query was executed successfully with the result " + str(result[0][0]))
     except Error as e:
         print("ERROR: " + str(e))
     return str(result[0][0])
+
+
+def getBuildings(connection):
+    result = ""
+    cursor = connection.cursor(buffered=True)  # create a buffered cursor based off the connection
+    try:
+        cursor.execute("SELECT buildingName from building")
+        connection.commit()  # confirm changes
+        result = cursor.fetchall()  # gets the result of the query
+        print("The Query was executed successfully with the result " + str(result))
+    except Error as e:
+        print("ERROR: " + str(e))
+    return result
+
+
+def getFloors(connection, building):
+    cursor = connection.cursor(buffered=True)  # create a buffered cursor based off the connection
+    try:
+        cursor.execute(
+            "SELECT floorName from floor where buildingID ="
+            "(SELECT id from building where buildingName = '" + building + "')")
+        connection.commit()  # confirm changes
+        result = cursor.fetchall()  # gets the result of the query
+        print("The Query was executed successfully with the result " + str(result))
+    except Error as e:
+        print("ERROR: " + str(e))
+    myresult = [''] * len(result)
+    for i in range(len(result)):
+        myresult[i] = result[i][0]
+    return myresult
 
 
 createDB()
