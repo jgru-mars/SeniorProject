@@ -4,7 +4,7 @@ from django.db import models
 
 class Floor(models.Model):
     name = models.CharField(max_length=30)
-    floorImg = models.ImageField(upload_to = "/")
+    floorImg = models.ImageField(upload_to = "mysite/carrollFloorPlans/")
 
 
 class Classes(models.Model):
@@ -24,8 +24,8 @@ class Buildings(models.Model):
 
 class Schedule(models.Model):
     section = models.CharField(max_length=30)
-    startTime = models.DateTimeField(auto_now_add = True) # change the field in the parenthesis
-    endTime = models.DateTimeField(auto_now_add = True) # change the field in the parenthesis
+    startTime = models.CharField(max_length=30)
+    endTime = models.CharField(max_length=30)
 
 
     # this is where to select things I think
