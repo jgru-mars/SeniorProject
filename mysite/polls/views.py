@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 import mysite.SQLaccess as sqla
+from polls.models import *
+
 
 conn = sqla.connectToDB()
 
@@ -10,11 +12,15 @@ def index(request):
 
 
 def floor(request):
-    building = request.POST['buildings']
+    mybuilding = request.POST['buildings']
 
-    if building:
-        items = sqla.getFloors(conn, building)
-        return render(request, 'floor.html', {'flooritems': items})
+    if mybuilding:
+        b = Building.objects.get(name=mybuilding)
+        items = Floor.objects.filter(building=b.id).values_list('name')
+        names = []
+        for item in items:
+            names.append(item[0])
+        return render(request, 'floor.html', {'flooritems': names})
     return HttpResponse("Permission Denied")
 
 
@@ -22,9 +28,9 @@ def image(request):
     myfloor = request.POST['floornames']
 
     if myfloor:
-        print("THE VALUE OF THE FLOOR IS "+str(myfloor))
-        filename = sqla.getFloorImg(conn, myfloor)
-        myimagefile = open('carrollFloorPlans/' + filename, 'rb')
+        f = Floor.objects.get(name=myfloor)
+        filename = Floor.objects.filter(name=f.name).values_list('floorimg')
+        myimagefile = open('carrollFloorPlans/' + str(filename[0][0]), 'rb')
         response = HttpResponse(content=myimagefile)
         response['Content-Type'] = 'image/jpeg'
         return response
