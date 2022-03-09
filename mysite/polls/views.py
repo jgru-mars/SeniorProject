@@ -28,6 +28,7 @@ def image(request):
     myfloor = request.POST['floornames']
 
     if myfloor:
+        #filename = sqla.getFloorImg(conn, myfloor)
         f = Floor.objects.get(name=myfloor)
         filename = Floor.objects.filter(name=f.name).values_list('floorimg')
         myimagefile = open('carrollFloorPlans/' + str(filename[0][0]), 'rb')
