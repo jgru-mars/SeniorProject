@@ -8,12 +8,11 @@
 <body>
 
 <form action="floor/" method="post">{% csrf_token %}
-    <label>Building:</label>
-    <select name="buildings" id="buildings">
-        <option value="OConnell Hall">OConnell Hall</option>
-        <option value="St. Charles Hall">St. Charles Hall</option>
-        <option value="Simperman Hall">Simperman Hall</option>
-        <option value="Library">Library</option>
+    <label>Building Name:</label>
+    <select name="buildingnames" id="buildingnames">
+        {% for building in buildingitems %}
+            <option value="{{building}}">{{building}}</option>
+        {% endfor %}
     </select>
     <input type="submit"/><br>
 </form>
