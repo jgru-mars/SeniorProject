@@ -3,18 +3,18 @@
 
 A web app that helps students figure out where they need to go on campus.
 
-###Requirements
+### Requirements
 
 - Django
 - mysql
 - mysql-connector-python
 
-###How to run:
+### How to run:
 
 In your command line, navigate to the directory in which the manage.py file resides.
 Run this command:
 
-%python manage.py runserver
+    %python manage.py runserver
 
 In your browser, go to http://127.0.0.1:8000/
 
