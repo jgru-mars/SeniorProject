@@ -8,11 +8,15 @@ conn = sqla.connectToDB()
 
 
 def index(request):
-    return render(request, 'index.html')
+    items = Building.objects.values_list('name')
+    names = []
+    for item in items:
+        names.append(item[0])
+    return render(request, 'index.html', {'buildingitems': names})
 
 
 def floor(request):
-    mybuilding = request.POST['buildings']
+    mybuilding = request.POST['buildingnames']
 
     if mybuilding:
         b = Building.objects.get(name=mybuilding)
@@ -28,9 +32,7 @@ def image(request):
     myfloor = request.POST['floornames']
 
     if myfloor:
-        #filename = sqla.getFloorImg(conn, myfloor)
-        f = Floor.objects.get(name=myfloor)
-        filename = Floor.objects.filter(name=f.name).values_list('floorimg')
+        filename = Floor.objects.filter(name=myfloor).values_list('floorimg')
         myimagefile = open('carrollFloorPlans/' + str(filename[0][0]), 'rb')
         response = HttpResponse(content=myimagefile)
         response['Content-Type'] = 'image/jpeg'
