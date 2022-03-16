@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+<form action="image/" method="post">{% csrf_token %}
+    {% with floor=floorname %}
+    <label>{{floor}}</label>
+    {% endwith %}
+    <label>Room Number:</label>
+    <select name="roomnames" id="roomnames">
+        {% for room in roomitems %}
+            <option value="{{room}}">{{room}}</option>
+        {% endfor %}
+    </select>
+    <input type="submit"/><br>
+</form>
+</body>
+</html>
