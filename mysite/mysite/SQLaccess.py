@@ -30,6 +30,8 @@ def createDB():  # creates the database if it doesn't exist yet.
                            'DEFAULT NULL, floorImg VARCHAR(50), building int, PRIMARY KEY (id)) ')
             cursor.execute('CREATE TABLE seniorprojectdb.polls_building (id int NOT NULL AUTO_INCREMENT, '
                            'name VARCHAR(45) DEFAULT NULL, PRIMARY KEY (id)) ')
+            cursor.execute('CREATE TABLE seniorprojectdb.polls_rooms (id int NOT NULL AUTO_INCREMENT, '
+                           'roomNumber int, floor int, xOffset int, yOffset int, PRIMARY KEY (id))')
             print('database created!')
         except Error as e:  # if there's an error catch it and print it
             print("ERROR: " + str(e))
@@ -41,22 +43,42 @@ def createDB():  # creates the database if it doesn't exist yet.
                            "'OC1.png', 1)")
             cursor.execute("INSERT into polls_floor (ID, name, floorImg, building) values (2, 'Charles 1st',"
                            "'CharlesS1.png', 2)")
-            cursor.execute("INSERT into polls_floor (ID, name, floorImg, building) values (3, 'Simperman 1st',"
+            cursor.execute("INSERT into polls_floor (ID, name, floorImg, building) values (3, 'Charles Ground',"
+                           "'CharlesGroundFloor.png', 2)")
+            cursor.execute("INSERT into polls_floor (ID, name, floorImg, building) values (4, 'Simperman 1st',"
                            "'SimpFortin1.png', 3)")
-            cursor.execute("INSERT into polls_floor (ID, name, floorImg, building) values (4, 'Simperman 2nd',"
+            cursor.execute("INSERT into polls_floor (ID, name, floorImg, building) values (5, 'Simperman 2nd',"
                            "'SimpFortin2.png', 3)")
-            cursor.execute("INSERT into polls_floor (ID, name, floorImg, building) values (5, 'Simperman 3rd',"
+            cursor.execute("INSERT into polls_floor (ID, name, floorImg, building) values (6, 'Simperman 3rd',"
                            "'SimpFortin3.png', 3)")
-            cursor.execute("INSERT into polls_floor (ID, name, floorImg, building) values (6, 'Simperman 4th',"
+            cursor.execute("INSERT into polls_floor (ID, name, floorImg, building) values (7, 'Simperman 4th',"
                            "'SimpFortin4.png', 3)")
-            cursor.execute("INSERT into polls_floor (ID, name, floorImg, building) values (7, 'Library 1st',"
+            cursor.execute("INSERT into polls_floor (ID, name, floorImg, building) values (8, 'Library 1st',"
                            "'Library 1st floor.png', 4)")
-            cursor.execute("INSERT into polls_floor (ID, name, floorImg, building) values (8, 'Library 2nd',"
+            cursor.execute("INSERT into polls_floor (ID, name, floorImg, building) values (9, 'Library 2nd',"
                            "'Library 2nd floor.png', 4)")
             cursor.execute("INSERT into polls_building (ID, name) values (1, 'OConnell Hall')")
             cursor.execute("INSERT into polls_building (ID, name) values (2, 'St. Charles Hall')")
             cursor.execute("INSERT into polls_building (ID, name) values (3, 'Simperman Hall')")
             cursor.execute("INSERT into polls_building (ID, name) values (4, 'Library')")
+            cursor.execute("INSERT into polls_rooms (id, roomNumber, floor, xOffset, yOffset) values "
+                           "(1, 12, 3, 600, 450)")
+            cursor.execute("INSERT into polls_rooms (id, roomNumber, floor, xOffset, yOffset) values "
+                           "(1, 14, 3, 600, 600)")
+            cursor.execute("INSERT into polls_rooms (id, roomNumber, floor, xOffset, yOffset) values "
+                           "(1, 17, 3, 780, 620)")
+            cursor.execute("INSERT into polls_rooms (id, roomNumber, floor, xOffset, yOffset) values "
+                           "(1, 27, 3, 764, 1337)")
+            cursor.execute("INSERT into polls_rooms (id, roomNumber, floor, xOffset, yOffset) values "
+                           "(1, 34, 3, 550, 1300)")
+            cursor.execute("INSERT into polls_rooms (id, roomNumber, floor, xOffset, yOffset) values "
+                           "(1, 44, 3, 1020, 1500)")
+            cursor.execute("INSERT into polls_rooms (id, roomNumber, floor, xOffset, yOffset) values "
+                           "(1, 45, 3, 1000, 1350)")
+            cursor.execute("INSERT into polls_rooms (id, roomNumber, floor, xOffset, yOffset) values "
+                           "(1, 133, 2, 1000, 1300)")
+            cursor.execute("INSERT into polls_rooms (id, roomNumber, floor, xOffset, yOffset) values "
+                           "(1, 140, 2, 500, 1400)")
             mydb.commit()
             print('inserted values!')
         except Error as e:  # if there's an error catch it and print it
@@ -122,3 +144,13 @@ def getFloors(connection, building):
 
 
 createDB()
+
+
+class csvLine():
+
+    def __init__(self, row):
+        self.building = row[0]
+        self.floor = row[1]
+        self.roomNum = row[2]
+        self.xOffset = row[3]
+        self.yOffset = row[4]
