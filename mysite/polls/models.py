@@ -21,16 +21,16 @@ class Classes(models.Model):
     ClassShort = models.CharField(max_length=30)
 
 
-class ClassRoom(models.Model):
+class Rooms(models.Model):
     id = models.IntegerField(max_length=100, primary_key=True)
-    floor = models.ForeignKey(Floor, null=True, on_delete=models.CASCADE)
-    ClassRoom = models.CharField(max_length=30)
-    coordinatesY = models.CharField(max_length=30)
-    coordinatesX = models.CharField(max_length=30)
+    floor = models.CharField(max_length=30)
+    roomNumber = models.CharField(max_length=30)
+    YOffset = models.CharField(max_length=30)
+    XOffset = models.CharField(max_length=30)
 
 class Schedule(models.Model):
     id = models.IntegerField(max_length=100, primary_key=True)
-    classRoomID = models.ForeignKey(ClassRoom, null=True, on_delete=models.CASCADE)
+    classRoomID = models.ForeignKey(Rooms, null=True, on_delete=models.CASCADE)
     classesID = models.ForeignKey(Classes, null=True, on_delete=models.CASCADE)
     section = models.CharField(max_length=30)
     startTime = models.CharField(max_length=30)

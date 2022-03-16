@@ -5,7 +5,7 @@
     <title>Login</title>
 </head>
 <body>
-<form action="image/" method="post">{% csrf_token %}
+<form action="room/" method="post">{% csrf_token %}
     <label>Floor Name:</label>
     <select name="floornames" id="floornames">
         {% for floor in flooritems %}

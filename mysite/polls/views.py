@@ -1,10 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-import mysite.SQLaccess as sqla
 from polls.models import *
-
-
-conn = sqla.connectToDB()
 
 
 def index(request):
@@ -28,13 +24,31 @@ def floor(request):
     return HttpResponse("Permission Denied")
 
 
-def image(request):
+def room(request):
     myfloor = request.POST['floornames']
 
     if myfloor:
+        f = Floor.objects.get(name=myfloor)
+        items = Rooms.objects.filter(floor=f.id).values_list('roomNumber')
+        print(str(items))
+        names = []
+        for item in items:
+            names.append(item[0])
+        request.session['floorname'] = myfloor
+        return render(request, 'room.html', {'roomitems': names, 'floorname': myfloor})
+    return HttpResponse("Permission Denied")
+
+
+def image(request):
+    myfloor = request.session['floorname']
+    myroom = request.POST['roomnames']
+
+    if myfloor and myroom:
         filename = Floor.objects.filter(name=myfloor).values_list('floorimg')
-        myimagefile = open('carrollFloorPlans/' + str(filename[0][0]), 'rb')
-        response = HttpResponse(content=myimagefile)
-        response['Content-Type'] = 'image/jpeg'
-        return response
+        myimagefile = str(filename[0][0])
+        mycoordx = Rooms.objects.filter(roomNumber=myroom).values_list('XOffset')
+        mycoordx = str(mycoordx[0][0])
+        mycoordy = Rooms.objects.filter(roomNumber=myroom).values_list('YOffset')
+        mycoordy = str(mycoordy[0][0])
+        return render(request, 'image.html', {'floorimage': myimagefile, 'xpos': mycoordx, 'ypos': mycoordy})
     return HttpResponse("Permission Denied")
