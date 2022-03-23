@@ -18,4 +18,8 @@ Run this command:
 
 In your browser, go to http://127.0.0.1:8000/
 
-In order to be able to connect to a local database, you must have MySQL installed and an .env file in the project with MY_PASSWORD=(your root password).
+In order to be able to connect to a local database, you must have MySQL installed and an .env file in the project with the following set up:
+
+    MY_HOSTNAME = "yourhost"
+    MY_USERNAME = "yourusername"
+    MY_PASSWORD = "yourpassword"
