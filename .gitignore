@@ -3,4 +3,4 @@ __pycache__/
 venv/
 .idea/
 .env
-mysite/polls/migrations/_init_.py
+mysite/polls/migrations

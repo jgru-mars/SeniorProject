@@ -80,7 +80,7 @@ load_dotenv()
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'seniorprojectdb',
+        'NAME': os.getenv('MY_DB'),
         'USER': os.getenv('MY_USERNAME'),
         'PASSWORD': os.getenv('MY_PASSWORD'),
         'HOST': os.getenv('MY_HOSTNAME'),
