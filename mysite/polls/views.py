@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from polls.models import *
 
 
@@ -12,7 +12,7 @@ def index(request):
 
 
 def floor(request):
-    mybuilding = request.POST['buildingnames']
+    mybuilding = request.GET['buildingvalue']
 
     if mybuilding:
         b = Building.objects.get(name=mybuilding)
@@ -20,35 +20,41 @@ def floor(request):
         names = []
         for item in items:
             names.append(item[0])
-        return render(request, 'floor.html', {'flooritems': names})
+        data = {
+            'values': names
+        }
+        return JsonResponse(data)
     return HttpResponse("Permission Denied")
 
 
 def room(request):
-    myfloor = request.POST['floornames']
+    myfloor = request.GET['floorvalue']
 
     if myfloor:
         f = Floor.objects.get(name=myfloor)
-        items = Rooms.objects.filter(floor=f.id).values_list('roomNumber')
+        items = Room.objects.filter(floor=f.id).values_list('roomNumber')
         print(str(items))
         names = []
         for item in items:
             names.append(item[0])
         request.session['floorname'] = myfloor
-        return render(request, 'room.html', {'roomitems': names, 'floorname': myfloor})
+        data = {
+            'values': names
+        }
+        return JsonResponse(data)
     return HttpResponse("Permission Denied")
 
 
 def image(request):
-    myfloor = request.session['floorname']
-    myroom = request.POST['roomnames']
+    myfloor = request.GET['floorvalue']
+    myroom = request.GET['roomvalue']
 
     if myfloor and myroom:
         filename = Floor.objects.filter(name=myfloor).values_list('floorimg')
         myimagefile = str(filename[0][0])
-        mycoordx = Rooms.objects.filter(roomNumber=myroom).values_list('XOffset')
+        mycoordx = Room.objects.filter(roomNumber=myroom).values_list('XOffset')
         mycoordx = str(mycoordx[0][0])
-        mycoordy = Rooms.objects.filter(roomNumber=myroom).values_list('YOffset')
+        mycoordy = Room.objects.filter(roomNumber=myroom).values_list('YOffset')
         mycoordy = str(mycoordy[0][0])
         return render(request, 'image.html', {'floorimage': myimagefile, 'xpos': mycoordx, 'ypos': mycoordy})
     return HttpResponse("Permission Denied")
