@@ -39,6 +39,10 @@
 <button onclick="displayImagePage('floor', 'room')">Submit</button>
 </div>
 
-<img src="{% static '2021campusmapdec.jpg' %}" alt="Map of Carroll">
+<img src="{% static '2021campusmapdec.jpg' %}" alt="Map of Carroll" id = "map">
+<div id = "img" style = "display: none">
+    <img src="{% static 'buildingslayout.png' %}" alt="Buildings" style="position: absolute;">
+    <img src="{% static 'indicator.png' %}" alt="Indicator" id = "indicator" style="position: absolute;">
+</div>
 </body>
 </html>

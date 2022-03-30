@@ -6,6 +6,11 @@ var x = document.getElementById(nextDrop);
    x.removeChild(x.firstChild)
   }
 
+  if(currentDrop === "building")
+  {
+    displayBuildingLocation(y.options[y.selectedIndex].text);
+  }
+
   getJSON('http://127.0.0.1:8000/' + nextDrop + '/?'+ currentDrop + 'value=' + y.options[y.selectedIndex].text,
 function(err, data) {
   if (err !== null) {
@@ -42,4 +47,38 @@ function displayImagePage(floor,room)
     var y = document.getElementById(room);
     url = 'http://127.0.0.1:8000/image/?floorvalue=' + x.options[y.selectedIndex].text + '&roomvalue=' + y.options[y.selectedIndex].text;
     window.location.href = url;
+}
+
+function displayBuildingLocation(building)
+{
+    var x = 0;
+    var y = 0;
+    var map = document.getElementById("map");
+    var img = document.getElementById("img");
+    var indicator = document.getElementById("indicator");
+    if (building==="Library")
+    {
+        x = 100;
+        y = 350;
+    }
+    else if (building==="OConnell Hall")
+    {
+        x = 400;
+        y = 800;
+    }
+    else if (building==="Simperman Hall")
+    {
+        x = 700;
+        y = 200;
+    }
+    else if (building==="St. Charles Hall")
+    {
+        x = 400;
+        y = 460;
+    }
+
+    map.style.display = "none";
+    img.style.display = "block";
+    indicator.style.left = x + 'px';
+    indicator.style.top = y + 'px';
 }
