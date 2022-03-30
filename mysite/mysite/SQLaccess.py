@@ -8,8 +8,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # credentials needed for the sql connection
-hostname = "localhost"
-myusername = "root"
+hostname = os.getenv("MY_HOSTNAME")
+myusername = os.getenv('MY_USERNAME')
 mypassword = os.getenv('MY_PASSWORD')
 db = os.getenv('MY_DB')
 
