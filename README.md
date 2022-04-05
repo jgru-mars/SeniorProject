@@ -5,9 +5,7 @@ A web app that helps students figure out where they need to go on campus.
 
 ### Requirements
 
-- Django
-- mysql
-- mysql-connector-python
+    % pip install -r requirements.txt
 
 ### Setting up database:
 Create your database locally in mySQL.
@@ -20,8 +18,9 @@ In order to be able to connect to a local database, you must have MySQL installe
 
 Then from the mysite directory run these commands.
 
-    %python manage.py makemigrations polls
-    %python manage.py migrate polls
+    % python manage.py makemigrations polls
+    % python manage.py migrate polls
+    % python manage.py migrate
 
 This creates your tables but not your values in the tables. Next locate SQLAccess.py in mysite/mysite/ and run it. This will create the data values for the tables.
 

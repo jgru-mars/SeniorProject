@@ -9,6 +9,8 @@ var x = document.getElementById(nextDrop);
   if(currentDrop === "building")
   {
     displayBuildingLocation(y.options[y.selectedIndex].text);
+    let room = document.getElementById("roomdiv");
+    room.style.display = "none";
   }
 
   getJSON('http://127.0.0.1:8000/' + nextDrop + '/?'+ currentDrop + 'value=' + y.options[y.selectedIndex].text,
@@ -16,6 +18,11 @@ function(err, data) {
   if (err !== null) {
     alert('Something went wrong: ' + err);
   } else {
+  o = document.createElement("option");
+  o.setAttribute("disabled", "disabled")
+  o.setAttribute("selected", "selected")
+  o.text = " -- SELECT -- ";
+  x.appendChild(o);
     for (let i = 0; i < data.values.length; i++) {
         o = document.createElement("option");
         o.value = data.values[i];
@@ -53,32 +60,28 @@ function displayBuildingLocation(building)
 {
     var x = 0;
     var y = 0;
-    var map = document.getElementById("map");
-    var img = document.getElementById("img");
     var indicator = document.getElementById("indicator");
     if (building==="Library")
     {
         x = 100;
-        y = 350;
+        y = 250;
     }
     else if (building==="OConnell Hall")
     {
-        x = 400;
-        y = 800;
+        x = 420;
+        y = 680;
     }
     else if (building==="Simperman Hall")
     {
-        x = 700;
-        y = 200;
+        x = 680;
+        y = 150;
     }
     else if (building==="St. Charles Hall")
     {
         x = 400;
-        y = 460;
+        y = 380;
     }
-
-    map.style.display = "none";
-    img.style.display = "block";
+    indicator.style.display = "block";
     indicator.style.left = x + 'px';
     indicator.style.top = y + 'px';
 }

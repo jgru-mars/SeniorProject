@@ -10,39 +10,41 @@
 <body>
 
 <div>
-<form>{% csrf_token %}
+    <div id = "buildiv" style = "float: left">
+        <form>{% csrf_token %}
     <label>Building Name:</label>
-    <select id="building">
+    <select id="building" onchange="submitMethod('building','floor')">
+        <option disabled selected value> -- SELECT -- </option>
         {% for building in buildingitems %}
             <option value="{{building}}">{{building}}</option>
         {% endfor %}
     </select>
 </form>
-<button onclick="submitMethod('building','floor')">Next</button>
 </div>
 
-<div style="display: none">
+<div id = "floordiv" style="display: none; float: left;">
 <form>{% csrf_token %}
     <label>Floor Name:</label>
-    <select id="floor" >
+    <select id="floor" onchange="submitMethod('floor','room')">
+        <option disabled selected value> -- select an option -- </option>
     </select>
 </form>
-<button onclick="submitMethod('floor', 'room')">Next</button>
 </div>
 
-<div style="display: none">
+<div id = "roomdiv" style="display: none; float: left;">
 <form>{% csrf_token %}
     <label>Room Number:</label>
-    <select id="room">
+    <select id="room" onchange="displayImagePage('floor', 'room')">
+        <option disabled selected value> -- select an option -- </option>
     </select>
 </form>
-<button onclick="displayImagePage('floor', 'room')">Submit</button>
+</div>
 </div>
 
-<img src="{% static '2021campusmapdec.jpg' %}" alt="Map of Carroll" id = "map">
-<div id = "img" style = "display: none">
+<div style="position: absolute; top: 30px">
     <img src="{% static 'buildingslayout.png' %}" alt="Buildings" style="position: absolute;">
-    <img src="{% static 'indicator.png' %}" alt="Indicator" id = "indicator" style="position: absolute;">
+    <img src="{% static 'indicator.png' %}" alt="Indicator" id = "indicator" style="position: absolute; display: none">
 </div>
+
 </body>
 </html>
