@@ -52,8 +52,18 @@ function displayImagePage(floor,room)
 {
     var x = document.getElementById(floor);
     var y = document.getElementById(room);
-    url = 'http://127.0.0.1:8000/image/?floorvalue=' + x.options[y.selectedIndex].text + '&roomvalue=' + y.options[y.selectedIndex].text;
-    window.location.href = url;
+    var option1 = x.options[y.selectedIndex]
+    var option2 = y.options[y.selectedIndex]
+    if(option1 !== undefined && option2 !== undefined)
+    {
+        url = 'http://127.0.0.1:8000/image/?floorvalue=' + option1.text + '&roomvalue=' + option2.text;
+        window.location.href = url;
+    }
+    else
+    {
+        alert('Something went wrong. That value might not be in our database yet.');
+    }
+
 }
 
 function displayBuildingLocation(building)
