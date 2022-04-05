@@ -75,23 +75,56 @@ function displayBuildingLocation(building)
     {
         x = 100;
         y = 250;
+        zoomLoc(46.60205948571197, -112.03806097729837);
     }
     else if (building==="OConnell Hall")
     {
         x = 420;
         y = 680;
+        zoomLoc(46.600815, -112.040290);
     }
     else if (building==="Simperman Hall")
     {
         x = 680;
         y = 150;
+        zoomLoc(46.599812, -112.037358);
     }
     else if (building==="St. Charles Hall")
     {
         x = 400;
         y = 380;
+        zoomLoc(46.600947, -112.038586);
     }
     indicator.style.display = "block";
     indicator.style.left = x + 'px';
     indicator.style.top = y + 'px';
+}
+
+// Initialize and add the map
+function initMap() {
+  // The location of campus
+  const campus= { lat: 46.60075279618787, lng: -112.03867441629914 };
+  // The map, centered at campus
+  const map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 17,
+    center: campus,
+  });
+  // The marker, positioned at campus
+  const marker = new google.maps.Marker({
+    position: campus,
+    map: map,
+  });
+}
+
+function zoomLoc(latitude, longitude)
+{
+  const campus= { lat: latitude, lng: longitude};
+  const map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 18,
+    center: campus,
+  });
+  const marker = new google.maps.Marker({
+    position: campus,
+    map: map,
+  });
 }

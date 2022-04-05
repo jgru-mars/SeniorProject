@@ -46,5 +46,13 @@
     <img src="{% static 'indicator.png' %}" alt="Indicator" id = "indicator" style="position: absolute; display: none">
 </div>
 
+<div id="map" style = "height: 800px; width: 1200px; position: absolute; top: 30px"></div>
+
+    <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-8nJSIrTlDAIejF02CqtVxj4zR24UoRo&callback=initMap&v=weekly"
+      async
+    ></script>
+
 </body>
 </html>
