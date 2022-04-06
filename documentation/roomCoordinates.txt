@@ -8,6 +8,8 @@ charles,ground,44,1020,1500
 charles,ground,45,1000,1350
 charles,1,133,1000,1300
 charles,1,140,500,1400
+chapel,2,201,975,250
+chapel,2,202,975,250
 simp,1,106,260,1000
 simp,1,108,260,1250
 simp,1,110,260,1500
