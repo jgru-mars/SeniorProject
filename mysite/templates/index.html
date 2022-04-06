@@ -26,7 +26,6 @@
 <form>{% csrf_token %}
     <label>Floor Name:</label>
     <select id="floor" onchange="submitMethod('floor','room')">
-        <option disabled selected value> -- select an option -- </option>
     </select>
 </form>
 </div>
@@ -35,7 +34,6 @@
 <form>{% csrf_token %}
     <label>Room Number:</label>
     <select id="room" onchange="displayImagePage('floor', 'room')">
-        <option disabled selected value> -- select an option -- </option>
     </select>
 </form>
 </div>

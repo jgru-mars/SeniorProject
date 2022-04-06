@@ -6,6 +6,13 @@
     <title>Title</title>
 </head>
 <body>
+
+{% with floor=floorval %}
+{% with room=roomval %}
+    <p>{{floor}} room #{{room}}</p>
+{% endwith %}
+{% endwith %}
+
 {% with file=floorimage %}
     <img src="{% static file %}" style="position: absolute;" alt="Floor Plan">
 {% endwith %}

@@ -52,7 +52,7 @@ function displayImagePage(floor,room)
 {
     var x = document.getElementById(floor);
     var y = document.getElementById(room);
-    var option1 = x.options[y.selectedIndex]
+    var option1 = x.options[x.selectedIndex]
     var option2 = y.options[y.selectedIndex]
     if(option1 !== undefined && option2 !== undefined)
     {

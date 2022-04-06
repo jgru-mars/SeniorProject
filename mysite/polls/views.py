@@ -56,5 +56,6 @@ def image(request):
         mycoordx = str(mycoordx[0][0])
         mycoordy = Room.objects.filter(roomNumber=myroom).values_list('YOffset')
         mycoordy = str(mycoordy[0][0])
-        return render(request, 'image.html', {'floorimage': myimagefile, 'xpos': mycoordx, 'ypos': mycoordy})
+        return render(request, 'image.html',
+                      {'floorval': myfloor, 'roomval': myroom, 'floorimage': myimagefile, 'xpos': mycoordx, 'ypos': mycoordy})
     return HttpResponse("Permission Denied")
