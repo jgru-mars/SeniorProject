@@ -79,9 +79,9 @@ def createDBvalues():  # creates the database if it doesn't exist yet.
             cursor.execute("INSERT into polls_room (id, roomNumber, floor_id, xOffset, yOffset) values "
                            "(7, 45, 3, 1000, 1350)")
             cursor.execute("INSERT into polls_room (id, roomNumber, floor_id, xOffset, yOffset) values "
-                           "(8, 133, 2, 1000, 1300)")
+                           "(8, 133, 2, 970, 1400)")
             cursor.execute("INSERT into polls_room (id, roomNumber, floor_id, xOffset, yOffset) values "
-                           "(9, 140, 2, 500, 1400)")
+                           "(9, 140, 2, 500, 1350)")
             mydb.commit()
             print('inserted room values!')
         except Error as e:  # if there's an error catch it and print it
