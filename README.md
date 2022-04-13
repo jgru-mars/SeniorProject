@@ -18,17 +18,20 @@ In order to be able to connect to a local database, you must have MySQL installe
 
 Then from the mysite directory run these commands.
 
-    % python manage.py makemigrations polls
     % python manage.py migrate polls
     % python manage.py migrate
 
-This creates your tables but not your values in the tables. Next locate SQLAccess.py in mysite/mysite/ and run it. This will create the data values for the tables.
+This creates your tables but not your values in the tables. You must run SQLAccess.py to create the data values for the tables.
+
+Navigate to mysite/mysite and run SQL access:
+
+    % python SQLAccess.py
 
 ### How to run:
 
 In your command line, navigate to the directory in which the manage.py file resides.
 Run this command:
 
-    %python manage.py runserver
+    % python manage.py runserver
 
 In your browser, go to http://127.0.0.1:8000/
