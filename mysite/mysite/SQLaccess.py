@@ -62,40 +62,86 @@ def createDBvalues():  # creates the database if it doesn't exist yet.
             print('inserted floor values!')
         except Error as e:  # if there's an error catch it and print it
             print("ERROR: " + str(e))
-    if roomexists:
-        try:
-            cursor.execute("INSERT into polls_room (id, roomNumber, floor_id, xOffset, yOffset) values "
-                           "(1, 12, 3, 600, 450)")
-            cursor.execute("INSERT into polls_room (id, roomNumber, floor_id, xOffset, yOffset) values "
-                           "(2, 14, 3, 600, 600)")
-            cursor.execute("INSERT into polls_room (id, roomNumber, floor_id, xOffset, yOffset) values "
-                           "(3, 17, 3, 780, 620)")
-            cursor.execute("INSERT into polls_room (id, roomNumber, floor_id, xOffset, yOffset) values "
-                           "(4, 27, 3, 764, 1337)")
-            cursor.execute("INSERT into polls_room (id, roomNumber, floor_id, xOffset, yOffset) values "
-                           "(5, 34, 3, 550, 1300)")
-            cursor.execute("INSERT into polls_room (id, roomNumber, floor_id, xOffset, yOffset) values "
-                           "(6, 44, 3, 1020, 1500)")
-            cursor.execute("INSERT into polls_room (id, roomNumber, floor_id, xOffset, yOffset) values "
-                           "(7, 45, 3, 1000, 1350)")
-            cursor.execute("INSERT into polls_room (id, roomNumber, floor_id, xOffset, yOffset) values "
-                           "(8, 133, 2, 970, 1400)")
-            cursor.execute("INSERT into polls_room (id, roomNumber, floor_id, xOffset, yOffset) values "
-                           "(9, 140, 2, 500, 1350)")
-            mydb.commit()
-            print('inserted room values!')
-        except Error as e:  # if there's an error catch it and print it
-            print("ERROR: " + str(e))
+    # if roomexists:
+    #     try:
+    #         cursor.execute("INSERT into polls_room (id, roomNumber, floor_id, xOffset, yOffset) values "
+    #                        "(1, 12, 3, 600, 450)")
+    #         cursor.execute("INSERT into polls_room (id, roomNumber, floor_id, xOffset, yOffset) values "
+    #                        "(2, 14, 3, 600, 600)")
+    #         cursor.execute("INSERT into polls_room (id, roomNumber, floor_id, xOffset, yOffset) values "
+    #                        "(3, 17, 3, 780, 620)")
+    #         cursor.execute("INSERT into polls_room (id, roomNumber, floor_id, xOffset, yOffset) values "
+    #                        "(4, 27, 3, 764, 1337)")
+    #         cursor.execute("INSERT into polls_room (id, roomNumber, floor_id, xOffset, yOffset) values "
+    #                        "(5, 34, 3, 550, 1300)")
+    #         cursor.execute("INSERT into polls_room (id, roomNumber, floor_id, xOffset, yOffset) values "
+    #                        "(6, 44, 3, 1020, 1500)")
+    #         cursor.execute("INSERT into polls_room (id, roomNumber, floor_id, xOffset, yOffset) values "
+    #                        "(7, 45, 3, 1000, 1350)")
+    #         cursor.execute("INSERT into polls_room (id, roomNumber, floor_id, xOffset, yOffset) values "
+    #                        "(8, 133, 2, 970, 1400)")
+    #         cursor.execute("INSERT into polls_room (id, roomNumber, floor_id, xOffset, yOffset) values "
+    #                        "(9, 140, 2, 500, 1350)")
+    #         mydb.commit()
+    #         print('inserted room values!')
+    #     except Error as e:  # if there's an error catch it and print it
+    #         print("ERROR: " + str(e))
 
+def readDataFromFile():
+    topDir = os.path.dirname(os.path.dirname(os.getcwd()))
+    file1 = open((topDir + '\documentation\\roomCoordinates.txt'), 'r')
+    mydb = mysql.connector.connect(host=hostname, username=myusername, password=mypassword, database=db)
+    cursor = mydb.cursor()
+    myid = 1
+    try:
+        Lines = file1.readlines()
+        for line in Lines:
+            values = line.split(",")
+            floorid = ""
+            execute = False
+            if values[0] == "charles":
+                if values[1] == "ground":
+                    floorid = "3"
+                    execute = True
+                elif values[1] == "1":
+                    floorid = "2"
+                    execute = True
+            elif values[0] == "simp":
+                if values[1] == "1":
+                    floorid = "4"
+                    execute = True
+                elif values[1] == "2":
+                    floorid = "5"
+                    execute = True
+                elif values[1] == "3":
+                    floorid = "6"
+                    execute = True
+                elif values[1] == "4":
+                    floorid = "7"
+                    execute = True
+            elif values[0] == "ocon":
+                floorid = "1"
+                execute = True
+            elif values[0] == "lib":
+                if values[1] == "1":
+                    floorid = "8"
+                    execute = True
+                elif values[1] == "2":
+                    floorid = "9"
+                    execute = True
+            if execute:
+                cursor.execute("INSERT into polls_room (id, roomNumber, floor_id, xOffset, yOffset) values ("
+                               + str(myid) + "," + values[2] + "," + floorid + ", " + values[3] + ", " + values[4] + ")")
+                myid+=1
+        mydb.commit()
+        print('inserted room values from file!')
+    except Error as e:  # if there's an error catch it and print it
+        print("ERROR: " + str(e))
 
 createDBvalues()
+readDataFromFile()
 
 
-class csvLine():
 
-    def __init__(self, row):
-        self.building = row[0]
-        self.floor = row[1]
-        self.roomNum = row[2]
-        self.xOffset = row[3]
-        self.yOffset = row[4]
+
+
