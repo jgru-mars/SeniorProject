@@ -27,6 +27,7 @@ function(err, data) {
         o = document.createElement("option");
         o.value = data.values[i];
         o.text = data.values[i];
+        o.class = "dropdwn-content"
         x.appendChild(o);
     }
   }

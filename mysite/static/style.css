@@ -1,0 +1,27 @@
+{% load static %}
+
+body {
+    margin-top: 10px;
+    max-width: 900px;
+    margin: auto;
+    background-image: url('background.png');
+    background-repeat: no-repeat;
+    background-size: 200vh;
+    font-family: "Tahoma", sans-serif;
+    font-size: 15px;
+}
+
+h1 {
+    font-size: 30px;
+    font-family: "Tahoma", sans-serif;
+}
+
+.dropdwn {
+    background-color: #c8e8ff;
+    font-family: "Tahoma", sans-serif;
+}
+
+.dropdwn-content {
+    background-color: #c8e8ff;
+    font-family: "Tahoma", sans-serif;
+}

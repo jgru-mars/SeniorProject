@@ -3,20 +3,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Welcome</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
     <script type = "text/javascript"  src="{% static 'dynamic.js' %}"></script>
 
 </head>
+<h1>Welcome</h1>
 <body>
-
 <div>
     <div id = "buildiv" style = "float: left">
         <form>{% csrf_token %}
     <label>Building Name:</label>
-    <select id="building" onchange="submitMethod('building','floor')">
-        <option disabled selected value> -- SELECT -- </option>
+    <select class="dropdwn" id="building" onchange="submitMethod('building','floor')">
+        <option class="dropdwn-content" disabled selected value> -- SELECT -- </option>
         {% for building in buildingitems %}
-            <option value="{{building}}">{{building}}</option>
+            <option class="dropdwn-content" value="{{building}}">{{building}}</option>
         {% endfor %}
     </select>
 </form>
@@ -25,7 +26,7 @@
 <div id = "floordiv" style="display: none; float: left;">
 <form>{% csrf_token %}
     <label>Floor Name:</label>
-    <select id="floor" onchange="submitMethod('floor','room')">
+    <select class="dropdwn" id="floor" onchange="submitMethod('floor','room')">
     </select>
 </form>
 </div>
@@ -33,24 +34,22 @@
 <div id = "roomdiv" style="display: none; float: left;">
 <form>{% csrf_token %}
     <label>Room Number:</label>
-    <select id="room" onchange="displayImagePage('floor', 'room')">
+    <select class="dropdwn" id="room" onchange="displayImagePage('floor', 'room')">
     </select>
 </form>
 </div>
 </div>
 
-<div style="position: absolute; top: 30px">
-    <img src="{% static 'buildingslayout.png' %}" alt="Buildings" style="position: absolute;">
-    <img src="{% static 'indicator.png' %}" alt="Indicator" id = "indicator" style="position: absolute; display: none">
-</div>
-
-<div id="map" style = "height: 800px; width: 1200px; position: absolute; top: 30px"></div>
+<div id="map" style = "height: 80%; width: 60%; position: absolute; top: 130px"></div>
 
     <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
     <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-8nJSIrTlDAIejF02CqtVxj4zR24UoRo&callback=initMap&v=weekly"
       async
     ></script>
-
+<div style="position: absolute; top: 30px">
+    <img src="{% static 'buildingslayout.png' %}" alt="Buildings" style="position: absolute; width: 0px; height: 0px;">
+    <img src="{% static 'indicator.png' %}" alt="Indicator" id = "indicator" style="position: absolute; display: none; width: 0px; height: 0px;">
+</div>
 </body>
 </html>
