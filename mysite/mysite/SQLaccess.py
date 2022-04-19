@@ -89,7 +89,7 @@ def createDBvalues():  # creates the database if it doesn't exist yet.
 
 def readDataFromFile():
     topDir = os.path.dirname(os.path.dirname(os.getcwd()))
-    file1 = open((topDir + '\documentation\\roomCoordinates.txt'), 'r')
+    file1 = open(topDir + '/documentation/roomCoordinates.txt', 'r')
     mydb = mysql.connector.connect(host=hostname, username=myusername, password=mypassword, database=db)
     cursor = mydb.cursor()
     myid = 1

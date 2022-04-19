@@ -34,7 +34,7 @@
 <div id = "roomdiv" style="display: none; float: left;">
 <form>{% csrf_token %}
     <label>Room Number:</label>
-    <select class="dropdwn" id="room" onchange="displayImagePage('floor', 'room')">
+    <select class="dropdwn" id="room" onchange="displayImagePage('floor', 'room')" onfocus="this.selectedIndex = -1;">
     </select>
 </form>
 </div>

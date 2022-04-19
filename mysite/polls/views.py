@@ -33,6 +33,7 @@ def room(request):
     if myfloor:
         f = Floor.objects.get(name=myfloor)
         items = Room.objects.filter(floor=f.id).values_list('roomNumber')
+        items.order_by('roomNumber')
         print(str(items))
         names = []
         for item in items:

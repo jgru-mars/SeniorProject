@@ -75,13 +75,6 @@ const getTranslate = ({ minScale, maxScale, scale }) => ({ pos, prevPos, transla
             y: event.pageY
         });
     });
-    container.addEventListener("dblclick", () => {
-        instance.panTo({
-            originX: 0,
-            originY: 0,
-            scale: 0.5,
-        });
-    });
     var isDown;
     container.addEventListener('mousedown', function(e) {
     isDown = true;
@@ -100,13 +93,20 @@ const getTranslate = ({ minScale, maxScale, scale }) => ({ pos, prevPos, transla
         });
     }
     });
+    var indicator = document.getElementById("indicator").getBoundingClientRect();
+    let centerX = container.offsetLeft + container.offsetWidth / 2;
+    let centerY = container.offsetTop + container.offsetHeight / 2;
+    initscale = 0.7;
+    xbuffer = 200*initscale;
+    xcenter = (centerX - indicator.left) * initscale;
+    ycenter = (centerY - indicator.top) * initscale;
     instance.panTo({
-            originX: 0,
-            originY: 0,
-            scale: 0.5,
+            originX: xcenter-xbuffer,
+            originY: ycenter,
+            scale: initscale
         });
     instance.zoom({
-            deltaScale: 10,
-            x: 0,
-            y: 0
+            deltaScale: initscale*10,
+            x: xcenter-xbuffer,
+            y: ycenter
         });
