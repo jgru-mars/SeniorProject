@@ -19,7 +19,7 @@
 {% endwith %}
 {% with x=xpos %}
 {% with y=ypos %}
-    <img src="{% static 'indicator.png' %}" style="position: absolute; left: {{x}}px; top: {{y}}px">
+    <img id = "indicator" src="{% static 'indicator.png' %}" style="position: absolute; left: {{x}}px; top: {{y}}px">
 {% endwith %}
 {% endwith %}
         </div>
