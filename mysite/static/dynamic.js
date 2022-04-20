@@ -101,31 +101,28 @@ function displayBuildingLocation(building)
     indicator.style.top = y + 'px';
 }
 
+const view = new ol.View({
+          center: ol.proj.fromLonLat([-112.03867441629914, 46.60075279618787]),
+          zoom: 17
+        })
+
 // Initialize and add the map
-function initMap() {
-  // The location of campus
-  const campus= { lat: 46.60075279618787, lng: -112.03867441629914 };
-  // The map, centered at campus
-  const map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 17,
-    center: campus,
-  });
-  // The marker, positioned at campus
-  const marker = new google.maps.Marker({
-    position: campus,
-    map: map,
-  });
-}
+  var map = new ol.Map({
+        target: 'map',
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.OSM()
+          })
+        ],
+        view: view
+      });
+
 
 function zoomLoc(latitude, longitude)
 {
-  const campus= { lat: latitude, lng: longitude};
-  const map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 18,
-    center: campus,
-  });
-  const marker = new google.maps.Marker({
-    position: campus,
-    map: map,
-  });
+    view.animate({
+          center: ol.proj.fromLonLat([longitude, latitude]),
+          zoom: 19,
+          duration: 500,
+          });
 }

@@ -2,7 +2,6 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from polls.models import *
 
-
 def index(request):
     items = Building.objects.values_list('name')
     names = []
