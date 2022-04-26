@@ -18,6 +18,8 @@ In order to be able to connect to a local database, you must have MySQL installe
 
 Then from the mysite directory run these commands.
 
+    % python manage.py makemigrations polls
+    % python manage.py makemigrations
     % python manage.py migrate polls
     % python manage.py migrate
 

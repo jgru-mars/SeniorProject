@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Editor</title>
+    <script>var staticloc = "{% static '' %}"</script>
+    <script type=text/javascript" src="https://raw.githubusercontent.com/requirejs/text/latest/text.js"></script>
+</head>
+<body>
+
+<div id = "parentDiv">
+    <img id="myimage" src="{% static 'CharlesS1.png' %}" alt="Building" style="display: none; position: absolute; top: 30px">
+    <img id="indicator" src="{% static 'indicator.png' %}" alt="Indicator" style="display: none; position: absolute;">
+</div>
+
+
+<div style = "position: fixed;
+  top: 0;
+  left: 0;">
+    <div id = "buildiv" style = "float: left">
+        <form>{% csrf_token %}
+    <label>Building Name:</label>
+    <select class="dropdwn" id="building" onchange="submitMethod('building','floor')">
+        <option class="dropdwn-content" disabled selected value> -- SELECT -- </option>
+        {% for building in buildingitems %}
+            <option class="dropdwn-content" value="{{building}}">{{building}}</option>
+        {% endfor %}
+    </select>
+</form>
+</div>
+
+<div id = "floordiv" style="display: none; float: left;">
+<form>{% csrf_token %}
+    <label>Floor Name:</label>
+    <select class="dropdwn" id="floor" onchange="displayImagePage('floor')">
+    </select>
+</form>
+</div>
+<div id = "roomdiv" style="display: none; float: left; overflow: hidden; white-space: nowrap;">
+    <td style="white-space: nowrap;">coordinates:</td>
+    <input type="text" id="newpos" name="coords" style="white-space: nowrap; width: 70px" onchange="changeCoordVal()">
+    <td style="white-space: nowrap;"> roomNum:</td>
+    <input type="text" id="room" name="roomnumb" style="white-space: nowrap; width: 50px"">
+    <button onclick = "WriteToFile()" style="white-space: nowrap;">Submit</button>
+</div>
+</div>
+
+<script type = "text/javascript"  src="{% static 'editor.js' %}"></script>
+
+</body>
+</html>

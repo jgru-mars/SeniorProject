@@ -13,7 +13,7 @@ var x = document.getElementById(nextDrop);
     room.style.display = "none";
   }
 
-  getJSON('http://127.0.0.1:8000/' + nextDrop + '/?'+ currentDrop + 'value=' + y.options[y.selectedIndex].text,
+  getJSON(window.location.href + nextDrop + '/?'+ currentDrop + 'value=' + y.options[y.selectedIndex].text,
 function(err, data) {
   if (err !== null) {
     alert('Something went wrong: ' + err);
@@ -57,7 +57,7 @@ function displayImagePage(floor,room)
     var option2 = y.options[y.selectedIndex]
     if(option1 !== undefined && option2 !== undefined)
     {
-        url = 'http://127.0.0.1:8000/image/?floorvalue=' + option1.text + '&roomvalue=' + option2.text;
+        url = window.location.href +'image/?floorvalue=' + option1.text + '&roomvalue=' + option2.text;
         window.location.href = url;
     }
     else

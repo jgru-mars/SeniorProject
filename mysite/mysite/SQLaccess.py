@@ -14,7 +14,7 @@ mypassword = os.getenv('MY_PASSWORD')
 db = os.getenv('MY_DB')
 
 
-def createDBvalues():  # creates the database if it doesn't exist yet.
+def createDBvalues():  # creates the database values
     mydb = mysql.connector.connect(host=hostname, username=myusername, password=mypassword, database=db)
     cursor = mydb.cursor()
     cursor.execute("SHOW TABLES")  # check all tables
@@ -28,7 +28,7 @@ def createDBvalues():  # creates the database if it doesn't exist yet.
             buildingexists = True
         elif str(x) == "('polls_room',)":
             roomexists = True
-    if buildingexists:
+    if buildingexists: # if the floor table exists, add the values
         try:
             cursor.execute("INSERT into polls_building (ID, name) values (1, 'OConnell Hall')")
             cursor.execute("INSERT into polls_building (ID, name) values (2, 'St. Charles Hall')")
@@ -38,7 +38,7 @@ def createDBvalues():  # creates the database if it doesn't exist yet.
             print('inserted building values!')
         except Error as e:  # if there's an error catch it and print it
             print("ERROR: " + str(e))
-    if floorexists:  # if the floor table was just created, add the values
+    if floorexists:  # if the floor table exists, add the values
         try:
             cursor.execute("INSERT into polls_floor (ID, name, floorImg, building_id) values (1, 'OConnell 1st',"
                            "'OC1.png', 1)")
@@ -140,8 +140,6 @@ def readDataFromFile():
 
 createDBvalues()
 readDataFromFile()
-
-
 
 
 
