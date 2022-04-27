@@ -103,7 +103,7 @@ def addToFile(request):
             myid = Floor.objects.filter(name=stringElem[0]).values_list('id')
             newstring = str(myid[0][0]) + "," + stringElem[1] + "," + stringElem[2] + "," + stringElem[3]
             get_current_site(request)
-            with open('static/roomCoordinates.txt', 'a') as f:
+            with open('static/roomCoordinates.csv', 'a') as f:
                 f.write('\n')
                 f.write(newstring)
                 f.close()
