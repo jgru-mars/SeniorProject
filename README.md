@@ -23,11 +23,12 @@ Then from the mysite directory run these commands.
     % python manage.py migrate polls
     % python manage.py migrate
 
-This creates your tables but not your values in the tables. You must run SQLAccess.py to create the data values for the tables.
+This creates your tables but not your values in the tables. 
+You must run loadData to create the data values for the tables.
 
-Navigate to mysite/mysite and run SQL access:
+While still in mysite directory run this command.
 
-    % python SQLAccess.py
+    % python manage.py runscript loadData
 
 ### How to run:
 
