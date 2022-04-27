@@ -2,7 +2,6 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from polls.models import *
-import uuid
 
 def index(request):
     items = Building.objects.values_list('name')
@@ -10,6 +9,19 @@ def index(request):
     for item in items:
         names.append(item[0])
     return render(request, 'index.html', {'buildingitems': names})
+
+
+def getLatLong(request):
+    mybuilding = request.GET['building']
+    if mybuilding:
+        mylat = Building.objects.filter(name=mybuilding).values_list('latitude')
+        mylong = Building.objects.filter(name=mybuilding).values_list('longitude')
+        data = {
+            'latitude': mylat[0][0],
+            'longitude': mylong[0][0]
+        }
+        return JsonResponse(data)
+    return HttpResponse("Permission Denied")
 
 
 def floor(request):

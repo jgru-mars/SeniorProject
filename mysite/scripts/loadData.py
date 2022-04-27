@@ -19,8 +19,10 @@ def run():
             # id, name
             for row in buildingReader:
                 _, insert = Building.objects.get_or_create(
-                    id = row[0],
-                    name=row[1]
+                    id=row[0],
+                    name=row[1],
+                    longitude=row[2],
+                    latitude=row[3]
                 )
             # The following loads in the data from floorTable.csv into the SQL database using models
             # id, name, floorimg, building_id
