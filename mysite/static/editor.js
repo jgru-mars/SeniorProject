@@ -83,8 +83,8 @@ function getClickPosition(e)
 {
     var parent = document.getElementById('parentDiv');
     var rect = parent.getBoundingClientRect();
-    var xPosition = e.clientX - rect.left - 25;
-    var yPosition = e.clientY - rect.top - 25;
+    var xPosition = Math.floor(e.clientX) - rect.left - 25;
+    var yPosition = Math.floor(e.clientY) - rect.top - 25;
 
     postext.value = xPosition + "," + yPosition;
     indicator.style.left = xPosition + 'px';
