@@ -108,7 +108,7 @@ var insertRoom = false;
 
 
 function WriteToFile(filename) {
-    var latlonginput = document.getElementById('latlong');
+    var latlonginput = document.getElementById('latlonginput');
     var floorname = document.getElementById('floorname');
     var floorinput = document.getElementById('floorinput');
     var floorbuilding = document.getElementById('floorbuilding');
