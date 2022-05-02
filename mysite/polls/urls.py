@@ -11,5 +11,6 @@ urlpatterns = [
     path('editor/', views.editor, name='editor'),
     path('editor/image/', views.editorimage, name='editorimage'),
     path('editor/runfunction/', views.addToFile, name='editorfunction'),
+    path('editor/getFiles/', views.getFiles, name='editorfiles'),
     path('favicon.ico', RedirectView.as_view(url='static/favicon.ico'))
 ]
