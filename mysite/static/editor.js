@@ -102,15 +102,36 @@ function changeCoordVal()
 
 }
 
-function WriteToFile() {
-    var floor = document.getElementById("floor");
-    var floorname = floor.options[floor.selectedIndex].text
-    var room = document.getElementById("room");
-    if(postext.value!=="" && room.value!=="")
-    {
-        let data = floorname + "," + room.value + "," + postext.value
+var insertBuilding = true;
+var insertFloor = false;
+var insertRoom = false;
 
-        getJSON(window.location.href +'runfunction/?datastring=' + data,
+
+function WriteToFile(filename) {
+    var latlonginput = document.getElementById('latlonginput');
+    var floorname = document.getElementById('floorname');
+    var floorinput = document.getElementById('floorinput');
+    var floorbuilding = document.getElementById('floorbuilding');
+    var floor = document.getElementById("floor");
+    var room = document.getElementById("room");
+    var building = document.getElementById("buildname");
+    var data = null;
+    if(latlonginput.value!=="" && building.value!=="" && insertBuilding)
+    {
+        data = building.value + "," + latlonginput.value;
+    }
+    else if (floorname.value!=="" && floorinput.options[floorinput.selectedIndex].text!=="" && insertFloor)
+    {
+        data = floorname.value + ',' + floorinput.options[floorinput.selectedIndex].text + ',' + floorbuilding.options[floorbuilding.selectedIndex].text
+    }
+    else if (postext.value!=="" && room.value!=="" && insertRoom)
+    {
+        var floorname = floor.options[floor.selectedIndex].text
+        data = floorname + "," + room.value + "," + postext.value;
+    }
+
+    if(data!==null){
+        getJSON(window.location.href +'runfunction/?datastring=' + data + "&file=" + filename,
             function(err, data) {
             if (err !== null) {
             alert('Something went wrong: ' + err);
@@ -122,5 +143,93 @@ function WriteToFile() {
     else
     {
         alert("Please fill in all values")
+    }
+}
+
+const view = new ol.View({
+          center: ol.proj.fromLonLat([-112.03867441629914, 46.60075279618787]),
+          zoom: 17
+        })
+
+// Initialize and add the map
+var map = new ol.Map({
+    target: 'map',
+    layers: [
+        new ol.layer.Tile({
+            source: new ol.source.OSM()
+          })
+        ],
+    view: view
+
+});
+
+
+map.on('click', function(e) {
+    var lonlat = ol.proj.transform(e.coordinate, 'EPSG:3857', 'EPSG:4326')
+    latlonginput.value = lonlat;
+});
+
+
+function getFloorPlans() {
+  var floorinput = document.getElementById('floorinput');
+  floorinput.parentElement.parentElement.style.display = "block";
+
+  while (floorinput.firstChild) {
+   floorinput.removeChild(floorinput.firstChild) //clear out list
+  }
+
+    getJSON('http://127.0.0.1:8000/editor/getFiles/',
+function(err, data) {
+  if (err !== null) {
+    alert('Something went wrong: ' + err);
+  } else {
+  o = document.createElement("option");
+  o.setAttribute("disabled", "disabled")
+  o.setAttribute("selected", "selected")
+  o.text = " -- SELECT -- "
+  floorinput.appendChild(o);
+    for (let i = 0; i < data.filename.length; i++) {
+        o = document.createElement("option");
+        o.value = data.filename[i];
+        o.text = data.filename[i];
+        o.class = "dropdwn-content"
+        floorinput.appendChild(o);
+    }
+  }
+});
+}
+
+function switchMode()
+{
+    var editmode = document.getElementById('editmode');
+    var buildiv = document.getElementById('AddBuilding');
+    var floordiv = document.getElementById('AddFloor');
+    var roomdiv = document.getElementById('AddRoom');
+    if(editmode.options[editmode.selectedIndex].value==="building")
+    {
+        insertBuilding = true;
+        insertFloor = false;
+        insertRoom = false;
+        buildiv.style.display = "block";
+        floordiv.style.display = "none";
+        roomdiv.style.display = "none";
+    }
+    else if(editmode.options[editmode.selectedIndex].value==="floor")
+    {
+        insertBuilding = false;
+        insertFloor = true;
+        insertRoom = false;
+        buildiv.style.display = "none";
+        floordiv.style.display = "block";
+        roomdiv.style.display = "none";
+    }
+    else if(editmode.options[editmode.selectedIndex].value==="room")
+    {
+        insertBuilding = false;
+        insertFloor = false;
+        insertRoom = true;
+        buildiv.style.display = "none";
+        floordiv.style.display = "none";
+        roomdiv.style.display = "block";
     }
 }

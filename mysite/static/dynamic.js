@@ -8,7 +8,7 @@ var x = document.getElementById(nextDrop);
 
   if(currentDrop === "building")
   {
-    displayBuildingLocation(y.options[y.selectedIndex].text);
+    displayBuildingLocation(y.options[y.selectedIndex].text)
     let room = document.getElementById("roomdiv");
     room.style.display = "none";
   }
@@ -69,36 +69,20 @@ function displayImagePage(floor,room)
 
 function displayBuildingLocation(building)
 {
-    var x = 0;
-    var y = 0;
-    var indicator = document.getElementById("indicator");
-    if (building==="Library")
-    {
-        x = 100;
-        y = 250;
-        zoomLoc(46.60205948571197, -112.03806097729837);
-    }
-    else if (building==="OConnell Hall")
-    {
-        x = 420;
-        y = 680;
-        zoomLoc(46.600815, -112.040290);
-    }
-    else if (building==="Simperman Hall")
-    {
-        x = 680;
-        y = 150;
-        zoomLoc(46.599812, -112.037358);
-    }
-    else if (building==="St. Charles Hall")
-    {
-        x = 400;
-        y = 380;
-        zoomLoc(46.600947, -112.038586);
-    }
-    indicator.style.display = "block";
-    indicator.style.left = x + 'px';
-    indicator.style.top = y + 'px';
+    var long = -112.03867441629914; //centered on carroll
+    var lat = 46.60075279618787;
+      getJSON(window.location.href + 'latlong/?building='+building ,
+function(err, data) {
+  if (err !== null) {
+    alert('Something went wrong: ' + err);
+  } else {
+    lat = data.longitude
+    long = data.latitude
+    zoomLoc(lat, long);
+  }
+});
+
+
 }
 
 const view = new ol.View({

@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <title>Welcome</title>
     <link rel="stylesheet" href="{% static 'style.css' %}">
-
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.14.1/css/ol.css" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.14.1/css/ol.css" type="text/css">
     <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.14.1/build/ol.js"></script>
 </head>
 <h1>Welcome</h1>
@@ -42,9 +41,5 @@
 </div>
 <div id="map" style = "height: 80%; margin-right: auto; margin-left: auto; width: 60%; position: absolute; display: block; top: 130px"></div>
 <script type = "text/javascript"  src="{% static 'dynamic.js' %}"></script>
-<div style="position: absolute; top: 30px">
-    <img src="{% static 'buildingslayout.png' %}" alt="Buildings" style="position: absolute; width: 0px; height: 0px;">
-    <img src="{% static 'indicator.png' %}" alt="Indicator" id = "indicator" style="position: absolute; display: none; width: 0px; height: 0px;">
-</div>
 </body>
 </html>

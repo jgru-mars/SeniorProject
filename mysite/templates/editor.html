@@ -5,46 +5,93 @@
     <meta charset="UTF-8">
     <title>Editor</title>
     <script>var staticloc = "{% static '' %}"</script>
-    <script type=text/javascript" src="https://raw.githubusercontent.com/requirejs/text/latest/text.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.14.1/css/ol.css" type="text/css">
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.14.1/build/ol.js"></script>
 </head>
 <body>
 
-<div id = "parentDiv">
-    <img id="myimage" src="{% static 'CharlesS1.png' %}" alt="Building" style="display: none; position: absolute; top: 30px">
-    <img id="indicator" src="{% static 'indicator.png' %}" alt="Indicator" style="display: none; position: absolute;">
+<div id = "AddBuilding" style = "display: block">
+    <div id="map" style = "height: 80%; margin-right: auto; margin-left: auto; width: 60%; position: absolute; display: block; top: 50px"></div>
+    <div style = "position: fixed; top: 0; left: 150px;">
+        <td style="white-space: nowrap;">Building Name:</td>
+        <input type="text" id="buildname" name="buildingname" style="white-space: nowrap;">
+        <td style="white-space: nowrap;">Lat and Long</td>
+        <input type="text" id="latlonginput" style="white-space: nowrap">
+        <button onclick = "WriteToFile('buildingNames.csv')" style="white-space: nowrap;">Submit</button>
+    </div>
+</div>
+
+<div id = "AddFloor" style = "display: none">
+    <div style = "position: fixed; top: 0; left: 150px;">
+        <div id = "buildiv1" style = "float: left">
+            <form>{% csrf_token %}
+            <label>Building Name:</label>
+            <select class="dropdwn" id="floorbuilding" onchange="getFloorPlans()">
+                <option class="dropdwn-content" disabled selected value> -- SELECT -- </option>
+                {% for building in buildingitems %}
+                    <option class="dropdwn-content" value="{{building}}">{{building}}</option>
+                {% endfor %}
+            </select>
+            </form>
+        </div>
+        <div style = "float: left; display: none">
+            <td style="white-space: nowrap;">Floor Name:</td>
+            <input type="text" id="floorname" name="floorname" style="white-space: nowrap;">
+            <form style = "float: left">{% csrf_token %}
+                <label>Floor Plan:</label>
+                <select id="floorinput">
+                </select>
+            </form>
+            <button onclick = "WriteToFile('floorTable.csv')" style="white-space: nowrap;">Submit</button>
+        </div>
+    </div>
 </div>
 
 
-<div style = "position: fixed;
-  top: 0;
-  left: 0;">
-    <div id = "buildiv" style = "float: left">
+<div id = "AddRoom" style = "display: none">
+    <div id = "parentDiv">
+        <img id="myimage" src="{% static 'CharlesS1.png' %}" alt="Building" style="display: none; position: absolute; top: 30px">
+        <img id="indicator" src="{% static 'indicator.png' %}" alt="Indicator" style="display: none; position: absolute;">
+    </div>
+
+    <div style = "position: fixed; top: 0; left: 150px;">
+        <div id = "buildiv" style = "float: left">
+            <form>{% csrf_token %}
+            <label>Building Name:</label>
+            <select class="dropdwn" id="building" onchange="submitMethod('building','floor')">
+                <option class="dropdwn-content" disabled selected value> -- SELECT -- </option>
+                {% for building in buildingitems %}
+                    <option class="dropdwn-content" value="{{building}}">{{building}}</option>
+                {% endfor %}
+            </select>
+            </form>
+        </div>
+
+        <div id = "floordiv" style="display: none; float: left;">
         <form>{% csrf_token %}
-    <label>Building Name:</label>
-    <select class="dropdwn" id="building" onchange="submitMethod('building','floor')">
-        <option class="dropdwn-content" disabled selected value> -- SELECT -- </option>
-        {% for building in buildingitems %}
-            <option class="dropdwn-content" value="{{building}}">{{building}}</option>
-        {% endfor %}
-    </select>
-</form>
+            <label>Floor Name:</label>
+            <select class="dropdwn" id="floor" onchange="displayImagePage('floor')">
+            </select>
+        </form>
+        </div>
+        <div id = "roomdiv" style="display: none; float: left; overflow: hidden; white-space: nowrap;">
+            <td style="white-space: nowrap;">coordinates:</td>
+            <input type="text" id="newpos" name="coords" style="white-space: nowrap; width: 70px" onchange="changeCoordVal()">
+            <td style="white-space: nowrap;"> roomNum:</td>
+            <input type="text" id="room" name="roomnumb" style="white-space: nowrap; width: 50px"">
+            <button onclick = "WriteToFile('roomCoordinates.csv')" style="white-space: nowrap;">Submit</button>
+        </div>
+    </div>
 </div>
 
-<div id = "floordiv" style="display: none; float: left;">
-<form>{% csrf_token %}
-    <label>Floor Name:</label>
-    <select class="dropdwn" id="floor" onchange="displayImagePage('floor')">
+<form style = "position: fixed; top: 0; left: 0;">
+    <label>Edit Mode:</label>
+    <select id="editmode" onchange="switchMode()">
+        <option value="building">Building</option>
+        <option value="floor">Floor</option>
+        <option value="room">Room</option>
     </select>
 </form>
-</div>
-<div id = "roomdiv" style="display: none; float: left; overflow: hidden; white-space: nowrap;">
-    <td style="white-space: nowrap;">coordinates:</td>
-    <input type="text" id="newpos" name="coords" style="white-space: nowrap; width: 70px" onchange="changeCoordVal()">
-    <td style="white-space: nowrap;"> roomNum:</td>
-    <input type="text" id="room" name="roomnumb" style="white-space: nowrap; width: 50px"">
-    <button onclick = "WriteToFile()" style="white-space: nowrap;">Submit</button>
-</div>
-</div>
 
 <script type = "text/javascript"  src="{% static 'editor.js' %}"></script>
 
