@@ -115,23 +115,23 @@ function WriteToFile(filename) {
     var floor = document.getElementById("floor");
     var room = document.getElementById("room");
     var building = document.getElementById("buildname");
-    var data = null;
+    var mydata = null;
     if(latlonginput.value!=="" && building.value!=="" && insertBuilding)
     {
-        data = building.value + "," + latlonginput.value;
+        mydata = building.value + "," + latlonginput.value;
     }
     else if (floorname.value!=="" && floorinput.options[floorinput.selectedIndex].text!=="" && insertFloor)
     {
-        data = floorname.value + ',' + floorinput.options[floorinput.selectedIndex].text + ',' + floorbuilding.options[floorbuilding.selectedIndex].text
+        mydata = floorname.value + ',' + floorinput.options[floorinput.selectedIndex].text + ',' + floorbuilding.options[floorbuilding.selectedIndex].text
     }
     else if (postext.value!=="" && room.value!=="" && insertRoom)
     {
         var floorname = floor.options[floor.selectedIndex].text
-        data = floorname + "," + room.value + "," + postext.value;
+        mydata = floorname + "," + room.value + "," + postext.value;
     }
 
-    if(data!==null){
-        getJSON(window.location.href +'runfunction/?datastring=' + data + "&file=" + filename,
+    if(mydata!==null){
+        getJSON(window.location.href +'runfunction/?datastring=' + mydata + "&file=" + filename,
             function(err, data) {
             if (err !== null) {
             alert('Something went wrong: ' + err);

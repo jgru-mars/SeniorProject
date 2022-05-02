@@ -68,9 +68,10 @@ def image(request):
     if myfloor and myroom:
         filename = Floor.objects.filter(name=myfloor).values_list('floorimg')
         myimagefile = str(filename[0][0])
-        mycoordx = Room.objects.filter(roomNumber=myroom).values_list('XOffset')
+        myfloor = Floor.objects.get(name=myfloor)  # get actual floor object
+        mycoordx = Room.objects.filter(floor=myfloor, roomNumber=myroom).values_list('XOffset')
         mycoordx = str(mycoordx[0][0])
-        mycoordy = Room.objects.filter(roomNumber=myroom).values_list('YOffset')
+        mycoordy = Room.objects.filter(floor=myfloor, roomNumber=myroom).values_list('YOffset')
         mycoordy = str(mycoordy[0][0])
         return render(request, 'image.html',
                       {'floorval': myfloor, 'roomval': myroom, 'floorimage': myimagefile, 'xpos': mycoordx,
@@ -118,11 +119,11 @@ def addToFile(request):
             _, insert = Building.objects.get_or_create(
                 id=len(allIDs) + 1,
                 name=stringElem[0],
-                longitude=stringElem[1],
-                latitude=stringElem[2]
+                longitude=stringElem[2],
+                latitude=stringElem[1]
             )
             data = {
-                'result': 'Added value "' + mystring + '" to file' + myfile
+                'result': 'Added value "' + mystring + '" to file ' + myfile
             }
             return JsonResponse(data)
         elif myfile == 'floorTable.csv':
@@ -144,19 +145,20 @@ def addToFile(request):
                 building=b
             )
             data = {
-                'result': 'Added value "' + newstring + '" to file' + myfile
+                'result': 'Added value "' + newstring + '" to file ' + myfile
             }
             return JsonResponse(data)
         elif myfile == 'roomCoordinates.csv':
             stringElem = mystring.split(',')
-            query = Room.objects.filter(roomNumber=int(stringElem[1])).values_list('id')
+            myid = Floor.objects.filter(name=stringElem[0]).values_list('id') # get id of floor
+            myfloor = Floor.objects.get(id=myid[0][0]) # get actual floor object
+            query = Room.objects.filter(floor=myfloor, roomNumber=int(stringElem[1])).values_list('id')
             if (len(query) > 0):  # value already exists
                 data = {
                     'result': "That room number is already in our database for this floor!"
                 }
             else:
                 # add to text file
-                myid = Floor.objects.filter(name=stringElem[0]).values_list('id')
                 newstring = str(myid[0][0]) + "," + stringElem[1] + "," + stringElem[2] + "," + stringElem[3]
                 with open('static/' + myfile, 'a') as f:
                     f.write('\n')
@@ -164,18 +166,17 @@ def addToFile(request):
                     f.close()
                 # insert into database
                 allIDs = Room.objects.values_list('id')
-                f = Floor.objects.get(id=myid[0][0])
                 _, insert = Room.objects.get_or_create(
                     id=len(allIDs) + 1,
-                    floor=f,
+                    floor=myfloor,
                     roomNumber=stringElem[1],
                     XOffset=stringElem[2],
                     YOffset=stringElem[3]
                 )
                 data = {
-                    'result': 'Added value "' + newstring + '" to file' + myfile
+                    'result': 'Added value "' + newstring + '" to file ' + myfile
                 }
-                return JsonResponse(data)
+            return JsonResponse(data)
     return HttpResponse("Permission Denied")
 
 

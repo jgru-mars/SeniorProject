@@ -22,7 +22,9 @@ def run():
             for row in buildingReader:
                 _, insert = Building.objects.get_or_create(
                     id=buildingid,
-                    name=row[0]
+                    name=row[0],
+                    longitude=row[1],
+                    latitude=row[2]
                 )
                 buildingid += 1
             # The following loads in the data from floorTable.csv into the SQL database using models
