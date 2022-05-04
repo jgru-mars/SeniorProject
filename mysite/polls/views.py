@@ -68,10 +68,10 @@ def image(request):
     if myfloor and myroom:
         filename = Floor.objects.filter(name=myfloor).values_list('floorimg')
         myimagefile = str(filename[0][0])
-        myfloor = Floor.objects.get(name=myfloor)  # get actual floor object
-        mycoordx = Room.objects.filter(floor=myfloor, roomNumber=myroom).values_list('XOffset')
+        myfloorob = Floor.objects.get(name=myfloor)  # get actual floor object
+        mycoordx = Room.objects.filter(floor=myfloorob, roomNumber=myroom).values_list('XOffset')
         mycoordx = str(mycoordx[0][0])
-        mycoordy = Room.objects.filter(floor=myfloor, roomNumber=myroom).values_list('YOffset')
+        mycoordy = Room.objects.filter(floor=myfloorob, roomNumber=myroom).values_list('YOffset')
         mycoordy = str(mycoordy[0][0])
         return render(request, 'image.html',
                       {'floorval': myfloor, 'roomval': myroom, 'floorimage': myimagefile, 'xpos': mycoordx,
